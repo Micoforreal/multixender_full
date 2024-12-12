@@ -1,0 +1,1 @@
+C:\Users\mjjam\Desktop\software\ development\ practice\multixender\src\contracts\target\debug\libmultisend_er.rlib: C:\Users\mjjam\Desktop\software\ development\ practice\multixender\src\contracts\src\lib.rs
