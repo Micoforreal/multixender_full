@@ -28,10 +28,12 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { DivideCircle, Plus, RefreshCcw,  X } from "lucide-react";
-import { useState } from "react";
+import { DivideCircle, Plus, RefreshCcw,  Watch,  X } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
 import { data } from "react-router-dom";
 import Loading from "@/components/ui/loading";
+import { NearContext } from "@/near/wallet/near";
+
    
   
 
@@ -59,6 +61,7 @@ const formSchema = z.object({
  
 const SendToken = () => {
      const [selectedToken, setSelectedToken] = useState(null)
+       const { signedAccountId, wallet } = useContext(NearContext);
 
      
       
@@ -71,19 +74,24 @@ const SendToken = () => {
       })
       
       const control = form.control
-      const {fields, append, remove} = useFieldArray({
+      const {register} = form
+      const {fields, append, remove , } = useFieldArray({
         control,
         name: 'recipient'
       })
-      
+      // console.log(form.watch('recipient'))
+      const value = form.watch('recipient')
+      console.log(value)
       const addRecipient = () => {
         append({ accountId: "", token: "", usd: "" })
       
       }   
         
         
-      const convertToUsd = (value) =>{
-        return 1
+      const convertToUsd = async (token, amount) =>{
+       const res = await wallet.convertToUsd(token, amount);
+       console.log(res)
+       return res
         
       }
 
@@ -95,13 +103,15 @@ const SendToken = () => {
       const handleTokenChange = (e)=>{
         const value = e.target.value;
         form.setValue('token', value)
-        form.setValue('usd', convertToUsd(value))
+        form.setValue('usd', wallet.convertToUsd(selectedToken,value))
       }
 
       // const tokenValue = form.watch("token"); 
       // const usdValue = form.watch("usd");
 
-      
+      useEffect(()=>{
+
+      })
       
       function onSubmit(data) {
        
@@ -116,7 +126,7 @@ const SendToken = () => {
 <Header/>
 
 
-<div className="container mx-auto  w-full px-5 py-10  md:flex-row flex-col items-center">
+<div className="container mx-auto  w-full px-5 py-10   items-center">
     <div className="pb-10 flex">
 
     <h2 className="mx-auto font-semibold">Send token to Multiple addresses</h2>
@@ -124,9 +134,9 @@ const SendToken = () => {
 
 
 
-    <Card className=" lg:px-40 mx-36 justify-center py-5  bg-gray-50">
-    <Form {...form} className="">
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <Card className=" lg:px-40  mx-auto xl:mx-36 justify-center py-5  bg-gray-50">
+    <Form {...form} className="" control={control}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-4">
       
 
       
@@ -150,7 +160,7 @@ const SendToken = () => {
                   setSelectedToken(val)
                   form.setValue('selectedToken',val)
               }}
-              //  onValueChange={field.onChange}
+   
               defaultValue={field.value}
                 >
                 <FormControl>
@@ -175,9 +185,9 @@ const SendToken = () => {
         {selectedToken  ? (<>
         {fields.map((field, index) =>(
 
-          <Card key={field.id} className=' bg-white flex '>
+          <Card key={field.id} className=' bg-white  flex '>
         
-      <div className="flex py-4 mb-2 mt-3 ">
+      <div className="md:flex md:ps-0 md:px-0 ps-10 px-3 py-4 mb-2 mt-3 ">
 
 
        
@@ -215,7 +225,7 @@ const SendToken = () => {
         
         name={`re`}
         render={({ field }) => (
-          <FormItem className='w-1/2 ms-auto '>
+          <FormItem className='my-5  md:my-0 md:w-1/2 mx-auto md:ms-auto '>
          
          <div className=" flex">
 
@@ -224,33 +234,56 @@ const SendToken = () => {
    
               <div className="flex  ">
 
-              <Controller
-      control={form.control}
-      name={`recipient[${index}].token`}
-      render={({ field })=>(
+               
+         
+        
         
         <Input 
-        value={form.watch(`recipient[${index}].token`)}
-        placeholder={selectedToken.toUpperCase()} {...field}
-        //  onChange={''}
+        control={control}
+        name={`recpient[${index}].token`}
+        {...register(`recpient.${index}.token`)}
+        onChange={
+          (e)=>{
+            console.log(e.target)
+
+            form.setValue(`recpient[${index}].usd`,'33')
+          }
+        }
+        value={`value[${index}].token`}
+
+      
+
+        
+        placeholder={selectedToken.toUpperCase()} 
+        // onValueChange={(val)=>{
+        //   field.onChange(val)  
+        //    }}
+
+      // defaultValue={'field.value'}
         />
-      )}
-      />   <span className="px-4 my-auto ">
+       <span className="px-4 my-auto ">
 
               <RefreshCcw size={18}/>
       </span>
-      <Controller
+      {/* <Controller
       control={form.control}
       name={`recpient[${index}].usd`}
-      render={({ field })=>(
-        
+      render={({ field })=>( */}
+      
         <Input 
-        value={form.watch(`recipient[${index}].usd`)}
-        placeholder="USD" {...field}
+        
+        {...register(`recpient[${index}].usd`) }
+        // value={form.watch(`recpient[${index}].usd`)}
+        // onChange={
+         
+        // }
+      
+        placeholder="USD" 
+        // defaultValue={'field.value'}
         //  onChange={}
         />
-      )}
-      />                
+      {/* )}
+      />                 */}
         </div>
           
               <FormMessage />
@@ -260,7 +293,7 @@ const SendToken = () => {
           
           </div>
       
-    <button onClick={()=>{remove(index)}} className="flex items-start justify-center pe-2 mt-1.5  ">
+    <button onClick={()=>{remove(index)}} className="flex  ml-auto items-start justify-center pe-2 mt-1.5 h-4  ">
         <X className=""></X>
     </button>
           </Card>
@@ -272,9 +305,9 @@ const SendToken = () => {
           
           
 
-                    <div className="flex">
+                    <div className="flex  md:ps-0 ps-5">
                       {/* <Loading/> */}
-<div className="font-semibold w-32 ">
+<div className="font-semibold w-32 md:text-base text-sm">
   <p className="flex">Gas Fee <span className="float-end px-5">33.3</span></p>
 
   <p className=" flex ">Total <span className="float-end px-10">33.0</span></p>
@@ -285,8 +318,10 @@ const SendToken = () => {
 
           <button type="button" 
           onClick={addRecipient}
-          className="border rounded-md w-20 flex justify-center items-center ml-auto">
-          <Plus  />
+          className="border rounded-md 
+          w-20 flex justify-center 
+          items-center ml-auto">
+          <Plus className="" />
           </button>
 
 

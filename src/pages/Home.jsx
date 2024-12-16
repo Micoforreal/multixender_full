@@ -26,7 +26,7 @@ const Home = () => {
 
     return (  <>
 <Header/>
-<Input type="email" />
+
 
     <div className="container mx-auto flex px-5 md:py-10 py-20 md:flex-row flex-col items-center">
     <div className="

@@ -2,11 +2,33 @@ import { Link, useLocation } from "react-router-dom"
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import logoImage from '@/assets/logo/logo.png'
+import { useContext,useEffect, useState } from 'react';;
+import { NearContext } from "@/near/wallet/near";
 
 export default function Header() {
   const location = useLocation();
+  const { signedAccountId, wallet } = useContext(NearContext);
+  const [action, setAction] = useState(() => {});
+  const [label, setLabel] = useState('Loading...');
+  
+
+  useEffect(() => {
+    if (!wallet) return;
+
+    if (signedAccountId) {
+      setAction(() => wallet.signOut);
+      setLabel(`Disconnect Wallet`);
+    } else {
+      setAction(() => wallet.signIn);
+      setLabel('Connect Wallet');
+    }
+  }, [signedAccountId, wallet]);
+
+
   return (
+
     <div className="flex items-center border-t-2 justify-between px-4 py-2 mx-4 mt-3 shadow rounded-xl border border-gray-100 dark:bg-gray-800">
+
       <Link to={'/'} className="flex items-center gap-2" prefetch={false}>
         <img src={logoImage} className="md:w-4/6 w-1/2" />
    
@@ -22,19 +44,22 @@ export default function Header() {
         <Link className="text-lg  my-auto hover:underline underline-offset-4" >
          About Us
         </Link>
-        {location.pathname !== '/send-token' && ( 
+        {location.pathname !== '/send-token' ? ( 
           <Link to={'/send-token'} className=" hover:underline underline-offset-4" >
         <button className="bg-orange-600  my-auto rounded-3xl text-white px-8 py-1" >
 
           Send token
         </button>
+
         </Link>
  
-        )}
+        ):(<button className="bg-black  my-auto rounded-3xl text-orange-600 px-8 py-1" onClick={action} >
+          {label}
+        </button>)}
       </div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button  size="icon" className=" border rounded-lg lg:hidden">
+          <Button  size="icon" className=" border rounded-lg md:hidden">
             <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>

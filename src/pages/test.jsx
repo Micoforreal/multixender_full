@@ -1,62 +1,34 @@
+// const nearAPI = require("near-api-js");
 
-// import React, { useEffect, useState } from 'react';
-// import { initContract, login, logout } from '../uitils/near-config';
+// const { connect, keyStores } = nearAPI;
 
-
-function Test() {
-//   const [walletConnection, setWalletConnection] = useState(null);
-//   const [contract, setContract] = useState(null);
-//   const [currentUser, setCurrentUser] = useState(null);
-//   const [balance, setBalance] = useState(0);
-//   const [input, setInput] = useState('');
-
-//   useEffect(() => {
-//     const init = async () => {
-//       const { near, walletConnection, contract } = await initContract();
-//       setWalletConnection(walletConnection);
-//       setContract(contract);
-
-//       if (walletConnection.isSignedIn()) {
-//         setCurrentUser(walletConnection.getAccountId());
-//         const balance = await contract.get_sender_balance({ account_id: walletConnection.getAccountId() });
-//         setBalance(balance);
-//       }
+// async function getGasPriceAndCalculateFee() {
+//     // Set up connection to NEAR (testnet configuration)
+//     const config = {
+//         networkId: "testnet", // Use "mainnet" for mainnet
+//         keyStore: new keyStores.InMemoryKeyStore(),
+//         nodeUrl: "https://rpc.testnet.near.org", // Mainnet: https://rpc.mainnet.near.org
 //     };
 
-//     init();
-//   }, []);
+//     const near = await connect(config);
 
-//   const handleTransfer = async () => {
-//     try {
-//       await contract.transfer({ input });
-//       const updatedBalance = await contract.get_sender_balance({ account_id: currentUser });
-//       setBalance(updatedBalance);
-//     } catch (error) {
-//       console.error('Transfer failed:', error);
-//     }
-//   };
+//     // Fetch the latest block
+//     const latestBlock = await near.connection.provider.block({ finality: "final" });
 
-//   return (
-//     <div>
-//       {currentUser ? (
-//         <div>
-//           <h1>Welcome, {currentUser}</h1>
-//           <p>Your balance: {balance}</p>
-//           <textarea
-//             value={input}
-//             onChange={(e) => setInput(e.target.value)}
-//             placeholder="Enter JSON input"
-//           ></textarea>
-//           <button onClick={handleTransfer}>Transfer</button>
-//           <button onClick={logout}>Logout</button>
-//         </div>
-//       ) : (
-//         <button onClick={login}>Login</button>
-//       )}
-//     </div>
-//   );
+//     // Get the gas price for the block
+//     const gasPriceResponse = await near.connection.provider.gasPrice(latestBlock.header.hash);
+//     const gasPrice = gasPriceResponse.gas_price; // Gas price in yoctoNEAR (10^-24 NEAR)
 
-<></>
-}
+//     console.log(`Gas Price (yoctoNEAR): ${gasPrice}`);
 
-export default Test;
+//     // Assume estimated gas usage (e.g., from a prior transaction or benchmark)
+//     const estimatedGasUnits = 300_000_000_000; // Example gas units
+
+//     // Calculate total fee
+//     const feeYoctoNEAR = BigInt(gasPrice) * BigInt(estimatedGasUnits); // Gas price × gas units
+//     const feeNEAR = nearAPI.utils.format.formatNearAmount(feeYoctoNEAR.toString());
+
+//     console.log(`Estimated Gas Fee: ${feeNEAR} NEAR`);
+// }
+
+// getGasPriceAndCalculateFee().catch(console.error);
