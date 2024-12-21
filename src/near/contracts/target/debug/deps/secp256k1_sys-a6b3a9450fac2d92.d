@@ -1,0 +1,10 @@
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\libsecp256k1_sys-a6b3a9450fac2d92.rmeta: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\macros.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\types.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\recovery.rs
+
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\libsecp256k1_sys-a6b3a9450fac2d92.rlib: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\macros.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\types.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\recovery.rs
+
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\secp256k1_sys-a6b3a9450fac2d92.d: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\macros.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\types.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\recovery.rs
+
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\lib.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\macros.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\types.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\secp256k1-sys-0.8.1\src\recovery.rs:

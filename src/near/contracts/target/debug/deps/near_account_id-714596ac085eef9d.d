@@ -1,0 +1,10 @@
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\libnear_account_id-714596ac085eef9d.rmeta: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\errors.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\borsh.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\serde.rs
+
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\libnear_account_id-714596ac085eef9d.rlib: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\errors.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\borsh.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\serde.rs
+
+C:\Users\mjjam\Desktop\software development practice\multixender\src\contracts\target\debug\deps\near_account_id-714596ac085eef9d.d: C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\lib.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\errors.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\borsh.rs C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\serde.rs
+
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\lib.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\errors.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\borsh.rs:
+C:\Users\mjjam\.cargo\registry\src\index.crates.io-6f17d22bba15001f\near-account-id-0.14.0\src\serde.rs:
