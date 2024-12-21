@@ -14,7 +14,7 @@ import { setupBitgetWallet } from "@near-wallet-selector/bitget-wallet";
 import { setupNarwallets } from "@near-wallet-selector/narwallets";
 import { setupWelldoneWallet } from "@near-wallet-selector/welldone-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
-import { CONTRACTID } from "../config/nearConfig";
+import { CONTRACTID, TEST_NETWORK, THIRTY_TGAS } from "../config/nearConfig";
 import { NearContext } from "@/context/walletContext";
 import { Navigate } from "react-router-dom";
 
@@ -22,12 +22,12 @@ import { Navigate } from "react-router-dom";
 
 
 
-
-const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
 
+console.log(TEST_NETWORK)
+
 export class Wallet {
-    constructor({ networkId = 'testnet', createAccessKeyFor = undefined }) {
+    constructor({ networkId = TEST_NETWORK, createAccessKeyFor = undefined }) {
         this.createAccessKeyFor = createAccessKeyFor;
         this.networkId = networkId;
         this.keyStore = new keyStores.BrowserLocalStorageKeyStore();
@@ -167,6 +167,9 @@ checkAccessKey = async (accountId) => {
       
       return 'success'
       
+    }else{
+      return 'failed'
+
     }
 
     
@@ -190,61 +193,6 @@ checkAccessKey = async (accountId) => {
 
 
 
-estimatedGasFee = async ({contractId, recipients, accountId, gas = THIRTY_TGAS})=>{
-  const url = `https://rpc.${this.networkId}.near.org`;
-  const provider = new providers.JsonRpcProvider({ url });
-  // const input = { recipients: recipients };
-
-  const argsString = JSON.stringify(recipients)
-  // const walletSelector = await this.selector;
-  //  const selectedWallet = await walletSelector.wallet(); 
-  //  console.log(selectedWallet.account())
-  // const accountId = walletSelector.store.getState().accounts[0].accountId;
-  const account = await this.near.account(accountId);
-  const rr =  Buffer.from(argsString).toString('base64')
-
-  // console.log(account)
-
-  // const res = await this.near.connection.provider({  
-  //   request_type: 'gas_price',
-  //   account_id: contractId,
-  //   method_name: 'transfer',
-  //   args:argsString,
-  //   args_base64: rr,
-  //   finality: 'optimistic',
-  // });
-
-  // console.log(res)
-this.near.connection.provider.gasPrice({
-
-})
-  const result = await account.viewFunction({
-    contractId,
-    methodName: 'transfer',
-    args:{input: argsString}
-  })
-  console.log(result)
-  
-  // const { result: estimatedGas } = await account.functionCall({
-  //    contractId, 
-  //    methodName : 'transfer',
-  //     args: JSON.stringify(input),
-  //      gas,
-  //      deposit:NO_DEPOSIT
-  //    });
-
-  //  console.log('Estimated gas fee:', estimatedGas);
-  
-
-  // const result = await this.viewMethod({
-  //   contractId,
-  //   method:'transfer',
-  //   args:{input: argsString}
-  // })
-
-  // console.log(result)
-
-}
 
 
 

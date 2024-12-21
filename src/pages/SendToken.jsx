@@ -35,6 +35,7 @@ import { NearContext } from "@/context/walletContext";
 
 import useSignedAccount from "@/hooks/useSignedAccount";
 import { toast } from "react-toastify";
+import { THIRTY_TGAS } from "@/near/config/nearConfig";
 
 const formSchema = z.object({
   selectedToken: z.string().nonempty({
@@ -142,7 +143,6 @@ const SendToken = () => {
       });
       
       if (res === 'success') {
-
         
         toast.success('Yay! Payment Successfull!!', {
           position: "top-center",
@@ -156,6 +156,18 @@ const SendToken = () => {
     
           reset()
 
+      } else {
+        toast.error("Payment Unsuccessful Please Try Again", {
+          position: "top-center",
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+   
+          });
+     
+        
       }
     } catch (error) {
       console.log(error);
@@ -163,13 +175,14 @@ const SendToken = () => {
   }
 
  
-  
+
 
   const getTotal = async () => {
+
     const value = watch('recipient');
     const Data = value.reduce((total, {usd} )=>total + parseFloat(usd), 0).toFixed(3)
     if ( Data&&!isNaN(Data)) {
-      setFees({...fees ,total:Data})   
+      setFees({...fees, gasFee:'0.02',total:Data})   
     }
 
     
@@ -188,7 +201,7 @@ const SendToken = () => {
 
 
           <div className=" flex justify-center ">
-          <p className=" ">Empowered by NEAR Protocol's cutting-edge technology</p>
+          <p className="mx-auto  text-center">Empowered by NEAR Protocol's cutting-edge technology</p>
           </div>
         </div>
 
@@ -229,9 +242,7 @@ const SendToken = () => {
                               </FormControl>
                               <SelectContent className="bg-white">
                                 <SelectItem value="near">NEAR</SelectItem>
-                                <SelectItem value="usdt">USDT</SelectItem>
-                                <SelectItem value="otto">OTTO</SelectItem>
-                              </SelectContent>
+                                </SelectContent>
                             </Select>
                           )}
                         />
