@@ -32,7 +32,7 @@ export default defineConfig({
 
 
   optimizeDeps: {
-    disabled: false,
+    // disabled: false,
     esbuildOptions: {
       // Enable esbuild polyfill plugins
       plugins: [
