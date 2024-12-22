@@ -53,8 +53,8 @@ export class Wallet {
             setupHereWallet(),
             setupMathWallet(),
             setupNightly(),
-            setupMeteorWallet(),
-            setupNightly(),
+            setupMeteorWallet({useRedirect:true}),
+       
             setupMyNearWallet(),
             
           
@@ -80,7 +80,6 @@ export class Wallet {
         return accountId;
 
 }
-
 
 
 
@@ -138,10 +137,12 @@ checkAccessKey = async (accountId) => {
  
     
       const walletSelector = await this.selector;
+      
       const selectedWallet = await walletSelector.wallet();
+      console.log(selectedWallet)
+
     if (!this.selector) { throw new Error('Wallet selector is not initialized.'); }
 
-    console.log(JSON.stringify(recipient))
     const outcome = await selectedWallet.signAndSendTransaction({
       receiverId: CONTRACTID,
       actions: [
@@ -160,9 +161,9 @@ checkAccessKey = async (accountId) => {
       
     });
     const result = await  providers.getTransactionLastResult(outcome); 
-   
 
-    if (outcome.final_execution_status === 'EXECUTED') {
+
+    if (outcome.final_execution_status === 'EXECUTED' ) {
 
       
       return 'success'

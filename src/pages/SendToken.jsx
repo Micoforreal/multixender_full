@@ -68,6 +68,7 @@ const SendToken = () => {
   const { signedAccountId, wallet } = useContext(NearContext);
   const { action, label } = useSignedAccount();
   const [fees, setFees] = useState({gasFee:'0.00',total:'0.00'})
+
   
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -184,8 +185,16 @@ const SendToken = () => {
       setFees({...fees, gasFee:'0.02',total:Data})   
     }
 
+
+    
+    
     
   }
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+    }
+  };
   return (
     <>
       <Header />
@@ -215,6 +224,7 @@ const SendToken = () => {
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8 px-4"
+                  onKeyPress={handleKeyPress}
                 >
          
                       <FormItem className="w-full">
