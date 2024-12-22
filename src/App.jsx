@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { isLoading, signedAccountId, wallet } = useContext(NearContext);
 
+
   return (
     <>
       <BrowserRouter>

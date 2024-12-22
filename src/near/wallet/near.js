@@ -8,7 +8,7 @@ import { setupNightly } from '@near-wallet-selector/nightly';
 import { setupMeteorWallet } from '@near-wallet-selector/meteor-wallet';
 
 
-import { providers, utils ,transactions, connect ,keyStores ,Contract } from 'near-api-js';
+import { providers, utils ,transactions, connect ,keyStores ,Contract,WalletConnection } from 'near-api-js';
 import { createContext, useContext } from 'react';
 import { setupBitgetWallet } from "@near-wallet-selector/bitget-wallet";
 import { setupNarwallets } from "@near-wallet-selector/narwallets";
@@ -30,13 +30,21 @@ export class Wallet {
         this.networkId = networkId;
         this.keyStore = new keyStores.BrowserLocalStorageKeyStore();
       }
+      
+      
+      
+      
+      
+
 
       async init(){
-      this.near = await connect({
+          this.near = await connect({
+
         networkId: this.networkId,
          keyStore: this.keyStore,
          nodeUrl: `https://rpc.${this.networkId}.near.org`,
          helperUrl: `https://helper.${this.networkId}.near.org`,
+         explorerUrl: `https://explorer.${this.networkId}.near.org`,
       })
     }
 
@@ -81,7 +89,6 @@ export class Wallet {
         return accountId;
 
 }
-
 
 
 
@@ -177,8 +184,12 @@ checkAccessKey = async (accountId) => {
     
   }
 
+
+
+
   
-  
+
+
   viewMethod = async ({ contractId, method, args = {} }) => {
     const url = `https://rpc.${this.networkId}.near.org`;
     const provider = new providers.JsonRpcProvider({ url });

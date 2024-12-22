@@ -150,7 +150,7 @@ const SendToken = () => {
             <p className="mx-auto  text-center">
               Empowered by NEAR Protocol's cutting-edge technology
             </p>
-          </div>
+           </div>
         </div>
 
         <Card className=" lg:px-40  mx-auto xl:mx-36 justify-center py-5  bg-gray-50">
@@ -163,8 +163,8 @@ const SendToken = () => {
               <>
               <div className="">
 
-              <p className="text-center">Wallet Balance</p>
-              <h1 className="text-center font-semibold">$400.4</h1>
+              {/* <p className="text-center">Wallet Balance</p>
+              <h1 className="text-center font-semibold"></h1> */}
               </div>
               <Form {...form} className="">
                 <form
