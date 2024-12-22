@@ -53,7 +53,7 @@ export class Wallet {
             setupHereWallet(),
             setupMathWallet(),
             setupNightly(),
-            setupMeteorWallet({useRedirect:true}),
+            setupMeteorWallet(),
        
             setupMyNearWallet(),
             
@@ -228,24 +228,33 @@ viewSenderBalance = async (account_id) =>
 
 
   convertToUsd = async (tokenSymbol, amount)=>{
+    const cachedPrice = localStorage.getItem(tokenSymbol); 
+    const cachedTime = localStorage.getItem(`${tokenSymbol}priceTime`);
+    const currentTime = Date.now();
+
+    if (cachedPrice && (currentTime - cachedTime < 5 * 60 * 1000)) {
+      const convertedAmount = cachedPrice * amount;
+      return convertedAmount;
+    }
+
     try {
+
+
       // Fetch prices from CoinGecko API
       const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd`);
-      const res = await  fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=NEAR&convert=USD`, {
-        headers: {
-          "X-CMC_PRO_API_KEY":'bc0c430e-2c16-4a16-8c2d-b89189de56dd',
-        },
-      });
-
-      console.log(res)
+    
       
       const data = await response.json();
+
 
 
 
        // Extract price and calculate conversion
        if (data[tokenSymbol] && data[tokenSymbol].usd) {
         const priceInUSD = data[tokenSymbol].usd;
+        localStorage.setItem(tokenSymbol, JSON.stringify(priceInUSD));
+        localStorage.setItem(`${tokenSymbol}priceTime`, currentTime);
+
         const convertedAmount = priceInUSD * amount;
         return convertedAmount;
     } else {
@@ -263,6 +272,16 @@ viewSenderBalance = async (account_id) =>
   }
 
   convertToToken = async (tokenSymbol ,usdAmount) => {
+    const cachedPrice = localStorage.getItem(tokenSymbol); 
+    const cachedTime = localStorage.getItem(`${tokenSymbol}priceTime`);
+    const currentTime = Date.now();
+
+    if (cachedPrice && (currentTime - cachedTime < 5 * 60 * 1000)) {
+      const tokenAmount = usdAmount / cachedPrice;
+      return tokenAmount;
+    }
+
+
     try {
       const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd`);
       const data = await response.json();
@@ -272,6 +291,10 @@ viewSenderBalance = async (account_id) =>
       // Extract price and calculate conversion
       if (data[tokenSymbol] && data[tokenSymbol].usd) {
         const conversionRate = data[tokenSymbol].usd;
+
+     
+        localStorage.setItem(tokenSymbol, JSON.stringify(conversionRate));
+        localStorage.setItem(`${tokenSymbol}priceTime`, currentTime);
         const tokenAmount = usdAmount / conversionRate;
        return tokenAmount;
 
