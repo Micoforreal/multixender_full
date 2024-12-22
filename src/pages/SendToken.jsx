@@ -160,12 +160,18 @@ const SendToken = () => {
                 <Loading />
               </div>
             ) : (
+              <>
+              <div className="">
+
+              <p className="text-center">Wallet Balance</p>
+              <h1 className="text-center font-semibold">$400.4</h1>
+              </div>
               <Form {...form} className="">
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-8 px-4"
                   onKeyPress={handleKeyPress}
-                >
+                  >
                   <FormItem className="w-full">
                     <FormLabel>Token</FormLabel>
                     <Controller
@@ -183,7 +189,7 @@ const SendToken = () => {
                               <SelectValue
                                 className=""
                                 placeholder="Select a token"
-                              />
+                                />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent className="bg-white">
@@ -191,7 +197,7 @@ const SendToken = () => {
                           </SelectContent>
                         </Select>
                       )}
-                    />
+                      />
 
                     <FormMessage />
                   </FormItem>
@@ -217,7 +223,7 @@ const SendToken = () => {
                                       className="text-sm px-5"
                                       placeholder="Enter recipient account id"
                                       {...field}
-                                    />
+                                      />
                                   </div>
 
                                   <FormMessage className="text-xm font-normal text-red-600" />
@@ -311,7 +317,7 @@ const SendToken = () => {
                                       <FormMessage className="text-xm font-normal text-red-600" />
                                     </FormItem>
                                   )}
-                                />
+                                  />
                               </div>
                             </FormItem>
                           </div>
@@ -321,7 +327,7 @@ const SendToken = () => {
                               remove(index);
                             }}
                             className="flex  ml-auto items-start justify-center pe-2 mt-1.5 h-4  "
-                          >
+                            >
                             <X className=""></X>
                           </button>
                         </Card>
@@ -346,9 +352,9 @@ const SendToken = () => {
                       type="button"
                       onClick={addRecipient}
                       className="border rounded-md 
-           flex justify-center 
-          items-center ml-auto py-5 px-7"
-                    >
+                      flex justify-center 
+                      items-center ml-auto py-5 px-7"
+                      >
                       <Plus className="" />
                     </Button>
                   </div>
@@ -358,7 +364,7 @@ const SendToken = () => {
                         className="bg-red-600    rounded-lg text-white px-12 "
                         type="button"
                         onClick={getTotal}
-                      >
+                        >
                         Show fees
                       </Button>
                     </div>
@@ -374,6 +380,7 @@ const SendToken = () => {
                   </div>
                 </form>
               </Form>
+                        </>
             )
           ) : (
             <div className="flex justify-center items-center  my-28">

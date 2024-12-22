@@ -14,7 +14,7 @@ import { setupBitgetWallet } from "@near-wallet-selector/bitget-wallet";
 import { setupNarwallets } from "@near-wallet-selector/narwallets";
 import { setupWelldoneWallet } from "@near-wallet-selector/welldone-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
-import { CONTRACTID, TEST_NETWORK, THIRTY_TGAS } from "../config/nearConfig";
+import { CONTRACTID, MAIN_NETWORK, TEST_NETWORK, THIRTY_TGAS } from "../config/nearConfig";
 import { NearContext } from "@/context/walletContext";
 import { Navigate } from "react-router-dom";
 
@@ -25,7 +25,7 @@ import { Navigate } from "react-router-dom";
 const NO_DEPOSIT = '0';
 
 export class Wallet {
-    constructor({ networkId = TEST_NETWORK, createAccessKeyFor = undefined }) {
+    constructor({ networkId =TEST_NETWORK, createAccessKeyFor = undefined }) {
         this.createAccessKeyFor = createAccessKeyFor;
         this.networkId = networkId;
         this.keyStore = new keyStores.BrowserLocalStorageKeyStore();
@@ -36,8 +36,7 @@ export class Wallet {
         networkId: this.networkId,
          keyStore: this.keyStore,
          nodeUrl: `https://rpc.${this.networkId}.near.org`,
-         walletUrl: `https://wallet.${this.networkId}.near.org`,
-         helperUrl: `https://helper.testnet.near.org`,
+         helperUrl: `https://helper.${this.networkId}.near.org`,
       })
     }
 
@@ -53,9 +52,11 @@ export class Wallet {
             setupHereWallet(),
             setupMathWallet(),
             setupNightly(),
-            setupMeteorWallet(),
-       
             setupMyNearWallet(),
+            setupMeteorWallet({
+              walletUrl:"https://wallet.meteorwallet.app/",
+              useRedirect:true
+            }),
             
           
       

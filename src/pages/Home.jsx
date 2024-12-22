@@ -136,7 +136,7 @@ const Home = () => {
     <p className='text-sm md:text-xl'><span className='text-orange-600'>Save</span> more time With Multi<span className='text-red-600'>X</span>ender</p>
   <div className='ml-auto'>
 
-  <button className="bg-orange-600 md:text-base text-sm my-auto rounded-3xl md:px-16 px-8 py-1 md:py-2">Send Your Token Now</button>
+  <Button className="bg-orange-600 md:text-base text-sm my-auto rounded-3xl md:px-16  py-1 md:py-2">Send Your Token Now</Button>
   </div>
   </Card>
 </div>
