@@ -133,7 +133,6 @@ const SendToken = () => {
       return rest;
     }); // Exclude email from submission data
     const totalAmount = filteredData.reduce((acc, { amount }) => acc + parseFloat(amount), 0).toLocaleString("fullwide", { useGrouping: false });
-    console.log(totalAmount);
     const Data = { recipients: filteredData };
     
     try {

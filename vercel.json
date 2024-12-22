@@ -1,0 +1,6 @@
+{
+    "rewrites":  [
+        {"source": "/send-token", "destination": "/send-token"},
+      {"source": "/(.*)", "destination": "/"}
+    ]
+  }

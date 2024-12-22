@@ -24,8 +24,6 @@ import { Navigate } from "react-router-dom";
 
 const NO_DEPOSIT = '0';
 
-console.log(TEST_NETWORK)
-
 export class Wallet {
     constructor({ networkId = TEST_NETWORK, createAccessKeyFor = undefined }) {
         this.createAccessKeyFor = createAccessKeyFor;
@@ -158,6 +156,8 @@ checkAccessKey = async (accountId) => {
           }
         },
       ],
+      callbackUrl: window.location.href,
+      
     });
     const result = await  providers.getTransactionLastResult(outcome); 
    
@@ -230,6 +230,14 @@ viewSenderBalance = async (account_id) =>
     try {
       // Fetch prices from CoinGecko API
       const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenSymbol}&vs_currencies=usd`);
+      const res = await  fetch(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=NEAR&convert=USD`, {
+        headers: {
+          "X-CMC_PRO_API_KEY":'bc0c430e-2c16-4a16-8c2d-b89189de56dd',
+        },
+      });
+
+      console.log(res)
+      
       const data = await response.json();
 
 
