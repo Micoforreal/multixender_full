@@ -39,12 +39,14 @@ const formSchema = z.object({
 
   recipient: z.array(
     z.object({
-      amount: z.string().nonempty({
-        message: "Required",
-      }),
-      usd: z.string().nonempty({
-        message: "Required",
-      }),
+      amount: z
+        .number({ message: "Invalid Input" })
+        .gt(0, { message: "Invalid Input" })
+        .nonnegative(),
+      usd: z
+        .number({ message: "Invalid Input" })
+        .gt(0, { message: "Invalid Input" })
+        .nonnegative(),
       account_id: z
         .string()
         .nonempty({
@@ -79,7 +81,7 @@ const SendToken = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       selectedToken: "",
-      recipient: [{ usd: "", account_id: "", amount: "" }],
+      recipient: [{ usd: null, account_id: "", amount: null }],
     },
     shouldUnregister: false,
   });
@@ -102,9 +104,8 @@ const SendToken = () => {
   const selectedToken = watch("selectedToken");
 
   const addRecipient = () => {
-    if(selectedToken){
-
-      append({ usd: "", amount: "", account_id: "" });
+    if (selectedToken) {
+      append({ usd: null, amount: null, account_id: "" });
     }
   };
 
@@ -219,7 +220,10 @@ const SendToken = () => {
                     {selectedToken ? (
                       <>
                         {fields.map((field, index) => (
-                          <Card key={field.id} className=" bg-white  flex animate__animated animate__fadeIn">
+                          <Card
+                            key={field.id}
+                            className=" bg-white  flex animate__animated animate__fadeIn"
+                          >
                             <div className="md:flex md:ps-0 md:px-0 ps-10 px-3 py-4 mb-2 mt-3 ">
                               <FormField
                                 className="inline"
@@ -253,90 +257,106 @@ const SendToken = () => {
                                 </div>
 
                                 <div className="flex  ">
-                                  <FormField
-                                    name={`recipient[${index}].amountfield`}
-                                    render={() => (
-                                      <FormItem>
-                                        <Input
-                                          id={`recipient[${index}].amount`}
-                                          {...register(
-                                            `recipient[${index}].amount`,
-                                            {
-                                              onChange: async (e) => {
-                                                const usd = await convertToUsd(
-                                                  selectedToken,
-                                                  e.target.value
-                                                );
-                                                if (usd === null) {
-                                                  setError(
-                                                    `recipient[${index}].error`,
-                                                    {
-                                                      type: "custom",
-                                                      message:
-                                                        "couldn't convert token",
-                                                    }
-                                                  );
+                                  <FormItem>
+                                    <Input
+                                      type="number"
+                                      value={watch(
+                                        `recipient[${index}].amount`
+                                      )}
+                                      id={`recipient[${index}].amount`}
+                                      {...register(
+                                        `recipient[${index}].amount`,
+
+                                        {
+                                          valueAsNumber: true,
+                                          onChange: async (e) => {
+                                            const usd = await convertToUsd(
+                                              selectedToken,
+                                              e.target.value
+                                            );
+                                            if (usd === null) {
+                                              setError(
+                                                `recipient[${index}].error`,
+                                                {
+                                                  type: "custom",
+                                                  message:
+                                                    "couldn't convert token",
                                                 }
-                                                setValue(
-                                                  `recipient[${index}].usd`,
-                                                  usd,
-                                                  {
-                                                    shouldTouch: true,
-                                                    shouldDirty: true,
-                                                  }
-                                                );
-                                              },
+                                              );
                                             }
-                                          )}
-                                          placeholder={selectedToken.toUpperCase()}
-                                        />
-                                        <FormMessage className="text-xm font-normal text-red-600" />
-                                      </FormItem>
+
+                                            setValue(
+                                              `recipient[${index}].usd`,
+
+                                              usd,
+                                              {
+                                                shouldTouch: true,
+                                                shouldDirty: true,
+                                              }
+                                            );
+                                          },
+                                        }
+                                      )}
+                                      placeholder={selectedToken.toUpperCase()}
+                                    />
+
+                                    {formState.errors.recipient?.[index]
+                                      ?.amount && (
+                                      <p className="text-red-600 text-sm ">
+                                        {
+                                          formState.errors.recipient[index]
+                                            .amount.message
+                                        }
+                                      </p>
                                     )}
-                                  />
+                                    <FormMessage className="text-xm font-normal text-red-600" />
+                                  </FormItem>
 
                                   <span className="px-4 my-auto ">
                                     <RefreshCcw size={18} />
                                   </span>
 
-                                  <FormField
-                                    name={`recipient[${index}].usdfeild`}
-                                    render={() => (
-                                      <FormItem>
-                                        <Input
-                                          id={`recipient[${index}].usd`}
-                                          {...register(
-                                            `recipient[${index}].usd`,
+                                  <FormItem>
+                                    <Input
+                                      type="number"
+                                      value={watch(`recipient[${index}].usd`)}
+                                      id={`recipient[${index}].usd`}
+                                      {...register(`recipient[${index}].usd`, {
+                                        valueAsNumber: true,
+                                        onChange: async (e) => {
+                                          const token = await convertToToken(
+                                            selectedToken,
+                                            e.target.value
+                                          );
+                                          setValue(
+                                            `recipient[${index}].amount`,
+                                            token,
                                             {
-                                              onChange: async (e) => {
-                                                const token =
-                                                  await convertToToken(
-                                                    selectedToken,
-                                                    e.target.value
-                                                  );
-                                                setValue(
-                                                  `recipient[${index}].amount`,
-                                                  token,
-                                                  {
-                                                    shouldTouch: true,
-                                                    shouldDirty: true,
-                                                  }
-                                                );
-                                              },
+                                              shouldTouch: true,
+                                              shouldDirty: true,
                                             }
-                                          )}
-                                          placeholder="USD"
-                                        />
-
-                                        <FormMessage className="text-xm font-normal text-red-600" />
-                                      </FormItem>
+                                          );
+                                        },
+                                      })}
+                                      placeholder="USD"
+                                    />
+                                    {formState.errors.recipient?.[index]
+                                      ?.usd && (
+                                      <p className="text-red-600 text-sm ">
+                                        {
+                                          formState.errors.recipient[index].usd
+                                            .message
+                                        }
+                                      </p>
                                     )}
-                                  />
+                                    <FormMessage className="text-xm font-normal text-red-600" />
+                                  </FormItem>
                                 </div>
                               </FormItem>
                             </div>
 
                             <button
+                              type="button"
                               onClick={() => {
                                 remove(index);
                               }}
