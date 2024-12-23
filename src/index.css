@@ -7,3 +7,12 @@
 body{
     @apply border-t-2 border-red-600
 }
+
+
+
+
+button:active {
+
+    @apply scale-90;
+
+     }

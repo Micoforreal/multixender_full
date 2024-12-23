@@ -1,26 +1,20 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import SendToken from "./pages/SendToken";
-// import Test from './pages/test';
-import { NearContext } from "@/context/walletContext";
 
-import { Wallet } from "./near/wallet/near";
-import { Network } from "lucide-react";
+import { NearContext } from "@/context/walletContext";
 import { useContext } from "react";
-import { CONTRACTID } from "./near/config/nearConfig";
-import Loading from "./components/ui/loadingIcon";
-import LoadingPage from "./components/ui/loadingPage";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import About from "./pages/about";
 function App() {
-  const { isLoading, signedAccountId, wallet } = useContext(NearContext);
+  const {signedAccountId} = useContext(NearContext);
 
 
   return (
     <>
       <BrowserRouter>
-      <ToastContainer autoClose={3000}/>
-        {/* {isLoading && <LoadingPage />} */}
+      <ToastContainer autoClose={4000}/>
         <Routes>
           <Route
             exact
@@ -30,7 +24,7 @@ function App() {
             }
           ></Route>
           <Route exact path="/send-token" element={<SendToken />}></Route>
-          {/*  <Route exact path='/test' element={<Test/>} ></Route> */}
+          <Route exact path="/about" element={<About/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

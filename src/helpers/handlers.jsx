@@ -1,5 +1,5 @@
-export  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-    }
-  };
+export const handleKeyPress = (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+};

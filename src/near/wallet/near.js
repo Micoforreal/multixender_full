@@ -17,6 +17,7 @@ import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { CONTRACTID, MAIN_NETWORK, TEST_NETWORK, THIRTY_TGAS } from "../config/nearConfig";
 import { NearContext } from "@/context/walletContext";
 import { Navigate } from "react-router-dom";
+import { setupBitteWallet } from "@near-wallet-selector/bitte-wallet";
 
 
 
@@ -60,11 +61,11 @@ export class Wallet {
             setupHereWallet(),
             setupMathWallet(),
             setupNightly(),
+            setupBitgetWallet(),
             setupMyNearWallet(),
-            setupMeteorWallet({
-              walletUrl:"https://wallet.meteorwallet.app/",
-              useRedirect:true
-            }),
+            setupMeteorWallet(),
+            setupBitteWallet()
+            
             
           
       
@@ -94,7 +95,7 @@ export class Wallet {
 
 
 
-signIn = async (changeHook) => {
+signIn = async (setAccountId,setAccountBalace) => {
   try {
     
     const walletSelector = await this.selector;
@@ -105,9 +106,12 @@ signIn = async (changeHook) => {
       
     });
    modal.show();
-    walletSelector.on('signedIn',(event)=>{
+    walletSelector.on('signedIn',async (event)=>{
       const id = event.accounts[0].accountId
-        changeHook(id)
+        setAccountId(id)
+      const bal = await this.getAcountBalance(id)
+      setAccountBalace(bal)
+
 
  
     })
@@ -187,6 +191,37 @@ checkAccessKey = async (accountId) => {
 
 
 
+  getAcountBalance = async (accountId) => {
+  
+
+    try {
+      const walletSelector = await this.selector;
+  
+      // Check if the user is signed in
+      const isSignedIn = walletSelector.isSignedIn();
+      if (isSignedIn) {
+        const account = await this.near.account(accountId);
+
+    
+        const balance = await account.getAccountBalance();
+
+       
+        const removeOne = await this.convertToToken('near',0.50)
+        const newInfo = balance.available / Math.pow(10,24).toFixed(2) 
+
+        const usd = (await this.convertToUsd('near',newInfo)).toFixed()
+        return usd
+
+        
+      } else {
+        console.log("User not signed in.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Failed to fetch balance:", error.message);
+      return null;
+    }
+  };
   
 
 

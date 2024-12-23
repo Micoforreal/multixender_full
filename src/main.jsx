@@ -8,10 +8,10 @@ import LoadingPage from "./components/ui/loadingPage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-      <NearContextProvider>
-    <Suspense fallback={<LoadingPage/>}>
+    <NearContextProvider>
+      <Suspense fallback={<LoadingPage />}>
         <App />
-    </Suspense>
-      </NearContextProvider>
+      </Suspense>
+    </NearContextProvider>
   </StrictMode>
 );
