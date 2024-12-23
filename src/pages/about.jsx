@@ -37,13 +37,9 @@ const About = () => {
             About Us
           </h1>
           <p className="mb-8 leading-relaxed">
-            Multixender i a platfrom that is powered by the near protocol, with
-            multixender you can send tokens to multiple in one click we are here
-            to make your transaction easier and stress free and also make you
-            save more on fees. Speed is part of our main focus when using
-            multixender which is why we have integrated an high speed wallet api
-            to sign and send your transactions. Say Good bye to slow and time
-            consuming Transfers
+          Welcome to Multixender, your ultimate solution for efficient and seamless token distribution!
+
+At Multixender, we believe in simplifying blockchain transactions. Built on the robust NEAR Protocol, Multixender empowers users to send NEAR tokens to multiple recipients in a single transaction. Whether you're managing airdrops, payouts, or community rewards, our platform streamlines the process, saving you time and reducing costs.
           </p>
 
           <div className="flex justify-center my-8">
