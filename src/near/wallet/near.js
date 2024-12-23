@@ -26,7 +26,7 @@ import { setupBitteWallet } from "@near-wallet-selector/bitte-wallet";
 const NO_DEPOSIT = '0';
 
 export class Wallet {
-    constructor({ networkId =TEST_NETWORK, createAccessKeyFor = undefined }) {
+    constructor({ networkId =MAIN_NETWORK, createAccessKeyFor = undefined }) {
         this.createAccessKeyFor = createAccessKeyFor;
         this.networkId = networkId;
         this.keyStore = new keyStores.BrowserLocalStorageKeyStore();
